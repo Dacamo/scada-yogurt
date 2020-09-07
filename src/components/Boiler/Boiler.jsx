@@ -60,7 +60,6 @@ const Boiler = () => {
         });
 
         setChartData(dataObject);
-        console.log(chartData);
       });
   };
 
