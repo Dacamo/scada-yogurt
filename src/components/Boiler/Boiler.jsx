@@ -11,7 +11,8 @@ import db from "../../database";
 const Boiler = () => {
   const [power, setPower] = useState(true);
   const [temperature, setTemperature] = useState(0);
-  const [referenceTemperature, setReferenceTemperature] = useState(40);
+  const [previousTemperature, setPreviousTemperature] = useState(0);
+  const [referenceTemperature, setReferenceTemperature] = useState(100);
   const [voltage, setVoltage] = useState(2);
   const [time, setTime] = useState(2);
   const [chartData, setChartData] = useState([]);
@@ -52,10 +53,11 @@ const Boiler = () => {
 
   const generateTemperature = () => {
     if (power) {
-      const newTemperature = voltage * time + temperature;
+      const newTemperature = (voltage * 0.0094534) + (voltage * 0.0094028) + temperature * 1.984  + previousTemperature * -0.9841;
       if (newTemperature >= referenceTemperature) {
         setPower(false);
       }
+      setPreviousTemperature(temperature);
       setTemperature(newTemperature);
       saveLog(temperature);
     } else {
@@ -145,7 +147,7 @@ const Boiler = () => {
   return (
     <>
       <div className="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="voltage">
+        <label className="block text-gray-700 text-sm font-bold mb-2" for="voltage">
           Voltaje
         </label>
         <input
@@ -158,7 +160,7 @@ const Boiler = () => {
         />
       </div>
       <div className="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="time">
+        <label className="block text-gray-700 text-sm font-bold mb-2" for="time">
           Periodo de muestreo (s)
         </label>
         <input
