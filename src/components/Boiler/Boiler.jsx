@@ -16,6 +16,7 @@ const Boiler = () => {
   const [voltage, setVoltage] = useState(2);
   const [time, setTime] = useState(2);
   const [chartData, setChartData] = useState([]);
+  //const [trigger, settrigger] = useState(false);
 
   const getLogs = () => {
     db.collection("logs")
@@ -52,6 +53,29 @@ const Boiler = () => {
   };
 
   const generateTemperature = () => {
+
+    /*if (power){
+      let newTemperature = (voltage * 0.0094534) + (voltage * 0.0094028) + temperature * 1.984  + previousTemperature * -0.9841;
+      
+      if(newTemperature >= referenceTemperature){
+        setVoltage(referenceTemperature*-1);
+        settrigger(true); 
+
+      }
+      else{
+        console.log('está por debajo seguir incrementando')
+        if(trigger){
+            setVoltage(12)
+            console.log('se mete por el tigger')
+        }
+        
+      }
+
+      setPreviousTemperature(temperature);
+      setTemperature(newTemperature);
+      //saveLog(temperature)
+    }*/
+    
     if (power) {
       const newTemperature = (voltage * 0.0094534) + (voltage * 0.0094028) + temperature * 1.984  + previousTemperature * -0.9841;
       if (newTemperature >= referenceTemperature) {
